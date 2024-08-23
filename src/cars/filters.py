@@ -1,16 +1,16 @@
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
-import django_filters
-from cars.models import Car
 import re
+
+import django_filters
+
+from cars.models import Car
 
 
 class CarFilter(django_filters.FilterSet):
     brand = django_filters.BaseInFilter(method='filter_words')
     model = django_filters.BaseInFilter(method='filter_words')
 
-    fuel_type = django_filters.MultipleChoiceFilter(choices=Car.FuelType.choices)
-    transmission_type = django_filters.ChoiceFilter(choices=Car.TransmissionType.choices)
+    fuel_type = django_filters.MultipleChoiceFilter(choices=Car.FuelTypeChoices.choices)
+    transmission = django_filters.ChoiceFilter(choices=Car.TransmissionChoices.choices)
 
     min_year = django_filters.NumberFilter(field_name='year', lookup_expr='gte')
     max_year = django_filters.NumberFilter(field_name='year', lookup_expr='lte')
@@ -48,10 +48,11 @@ class CarFilter(django_filters.FilterSet):
         fields = ('brand',
                   'model',
                   'min_year',
+                  'year',
                   'max_year',
                   'min_mileage',
                   'max_mileage',
                   'min_price',
                   'max_price',
                   'fuel_type',
-                  'transmission_type')
+                  'transmission')
