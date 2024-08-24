@@ -31,3 +31,4 @@ class Car(models.Model):
 
     class Meta:
         ordering = ('-id',)
+        unique_together = ('brand', 'model')
